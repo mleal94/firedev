@@ -7,12 +7,12 @@ const findStudent = async (req, res, next) => {
     const { params: { id } } = req;
     const student = await Student.findOne({ _id: id }, DEFAULT_PROJECTIONS);
     if (!student) {
-      return new Error(CustomErrors.NOT_FOUND_ERROR.MESSAGE);
+      return res.status(404).json({ message: CustomErrors.NOT_FOUND_ERROR.MESSAGE });
     }
     req.entity = student;
     return next();
   } catch (e) {
-    return next(new Error(e));
+    return res.status(500).json({ message: e.message });
   }
 };
 

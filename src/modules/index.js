@@ -1,3 +1,7 @@
-const Controllers = require('./student');
+const StudentController = require('./student');
+const ClassRoomController = require('./classRoom');
 
-module.exports = { Controllers };
+module.exports = {
+  StudentController,
+  ClassRoomController,
+};

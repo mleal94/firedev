@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const { Controllers } = require('../modules');
+const { StudentController, ClassRoomController } = require('../modules');
 
 const App = express();
 App.use(cors());
@@ -12,5 +12,7 @@ App.use(express.json());
 require('../config/database.config');
 
 // API Routing
-App.use(Controllers);
+App.use(StudentController);
+App.use(ClassRoomController);
+
 module.exports = App;
