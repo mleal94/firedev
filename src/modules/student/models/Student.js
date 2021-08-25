@@ -41,7 +41,6 @@ const Student = new Schema({
   },
   bornCity: {
     type: String,
-    enum: [],
   },
   classRoom: {
     type: Schema.Types.ObjectId,
