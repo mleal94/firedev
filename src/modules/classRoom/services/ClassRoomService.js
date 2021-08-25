@@ -1,6 +1,7 @@
 const { find } = require('lodash');
 const { CustomErrors, Regex: { ID } } = require('../../utils');
 const ClassRoom = require('../models');
+const Student = require('../../student/models');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 
 class ClassRoomService {
@@ -24,7 +25,8 @@ class ClassRoomService {
         });
       }
       const { _id } = await ClassRoom.create(body);
-      const group = await ClassRoom.findOne({ _id }, DEFAULT_PROJECTIONS).lean();
+      const group = await ClassRoom.findOne({ _id }, DEFAULT_PROJECTIONS)
+        .populate({ path: 'students', select: ['name', 'email', 'age', 'gender'] }).lean();
       return res.status(201).json(group);
     } catch (e) {
       return res.status(500).json({ message: e.message });
@@ -49,6 +51,13 @@ class ClassRoomService {
     try {
       const { entity } = req;
       const removed = await entity.remove();
+      const filter = {
+        classRoom: entity._id,
+      };
+      const update = {
+        $unset: { classRoom: 1 },
+      };
+      await Student.updateMany(filter, update);
       return res.status(200).json(removed);
     } catch (e) {
       return res.status(500).json({ message: e.message });
@@ -77,7 +86,7 @@ class ClassRoomService {
           },
         };
       }
-      const result = await ClassRoom.find(query, DEFAULT_PROJECTIONS);
+      const result = await ClassRoom.find(query, DEFAULT_PROJECTIONS).populate({ path: 'students', select: ['name', 'email', 'age', 'gender'] });
       return res.status(200).json(result);
     } catch (e) {
       return res.status(500).json({ message: e.message });

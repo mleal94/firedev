@@ -9,7 +9,7 @@ const ClassRoom = new Schema({
     unique: true,
   },
   mainProfessor: {
-    type: Schema.Types.ObjectId,
+    type: String,
   },
   students: [{
     type: Schema.Types.ObjectId,
