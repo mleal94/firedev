@@ -5,7 +5,8 @@ const { CustomErrors } = require('../../core/utils');
 const findClassRoom = async (req, res, next) => {
   try {
     const { params: { id } } = req;
-    const classRoom = await ClassRoom.findOne({ _id: id }, DEFAULT_PROJECTIONS);
+    const classRoom = await ClassRoom.findOne({ _id: id }, DEFAULT_PROJECTIONS)
+      .populate({ path: 'students', select: ['name', 'email', 'age', 'gender'] });
     if (!classRoom) {
       return res.status(404).json({ message: CustomErrors.NOT_FOUND_CLASSROOM_ERROR.MESSAGE });
     }
