@@ -23,6 +23,12 @@ const CustomErrors = {
   NOT_VALID_ID_ERROR: {
     MESSAGE: 'El id no es válido',
   },
+  NOT_VALID_AGE_ERROR: {
+    MESSAGE: 'Este valor no es valido para la edad',
+  },
+  NOT_VALID_TYPE_AGE_ERROR: {
+    MESSAGE: 'El valor del campo edad no debe contener caracteres que no sean números',
+  },
   NOT_VALID_ID_VALIDATION: {
     MESSAGE: 'no es válido',
   },

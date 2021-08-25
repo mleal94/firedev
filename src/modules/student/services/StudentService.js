@@ -1,4 +1,4 @@
-const { CustomErrors, Regex: { ID } } = require('../../core/utils');
+const { CustomErrors, Regex: { NUMBER } } = require('../../core/utils');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 const Student = require('../models');
 
@@ -15,12 +15,13 @@ class StudentService {
       if (!body.age) {
         return res.status(400).json({ message: CustomErrors.MISSING_AGE_ERROR.MESSAGE });
       }
-      if (!body.classRoom) {
-        return res.status(400).json({ message: CustomErrors.MISSING_CLASSROOM_ERROR.MESSAGE });
+      if (body.age && !NUMBER.test(body.age)) {
+        return res.status(400).json({ message: CustomErrors.NOT_VALID_TYPE_AGE_ERROR.MESSAGE });
       }
-      if (body.classRoom && !ID.test(body.classRoom)) {
-        return res.status(400).json({ message: CustomErrors.NOT_VALID_ID_ERROR.MESSAGE });
+      if (body.age > 120) {
+        return res.status(400).json({ message: CustomErrors.NOT_VALID_AGE_ERROR.MESSAGE });
       }
+      body.age = +body.age;
       const exist = await Student.findOne({ email: body.email });
       if (exist) {
         return res.status(400).json({ message: CustomErrors.EXIST_EMAIL_ERROR.MESSAGE });

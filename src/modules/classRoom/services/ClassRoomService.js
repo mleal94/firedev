@@ -99,8 +99,24 @@ class ClassRoomService {
       if (student && !ID.test(student)) {
         return res.status(400).json({ message: CustomErrors.NOT_VALID_ID_ERROR.MESSAGE });
       }
-      entity.students.push(student);
-      const updated = await entity.save();
+      const filter = {
+        _id: student,
+      };
+      const update = {
+        $set: {
+          classRoom: entity._id,
+        },
+      };
+      const addStudentQuery = {
+        $push: {
+          students: student,
+        },
+      };
+      const classRoomFilter = { _id: entity._id };
+      await ClassRoom.updateOne(classRoomFilter, addStudentQuery);
+      const updated = await ClassRoom.findOne(classRoomFilter).lean()
+        .populate({ path: 'students', select: ['name', 'email', 'age', 'gender'] });
+      await Student.updateOne(filter, update);
       return res.status(200).json(updated);
     } catch (e) {
       return res.status(500).json({ message: e.message });
@@ -114,12 +130,12 @@ class ClassRoomService {
         return res.status(400).json({ message: CustomErrors.NOT_VALID_ID_ERROR.MESSAGE });
       }
       const { students } = entity;
-      const exist = find(students, (studentDb) => studentDb.toString() === student);
+      const exist = find(students, (studentDb) => studentDb._id.toString() === student);
       if (!exist) {
         return res.status(404)
           .json({ message: CustomErrors.NOT_FOUND_STUDENT_CLASSROOM_ERROR.MESSAGE });
       }
-      const studentsUpdated = students.filter((studentDb) => studentDb.toString() !== student);
+      const studentsUpdated = students.filter((studentDb) => studentDb._id.toString() !== student);
       entity.students = [...studentsUpdated];
       const updated = await entity.save();
       return res.status(200).json(updated);
