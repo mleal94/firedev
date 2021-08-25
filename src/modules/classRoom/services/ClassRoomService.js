@@ -99,6 +99,24 @@ class ClassRoomService {
       if (student && !ID.test(student)) {
         return res.status(400).json({ message: CustomErrors.NOT_VALID_ID_ERROR.MESSAGE });
       }
+      const { students } = entity;
+      const filterClassRoom = {
+        students: {
+          $elemMatch: {
+            $eq: student,
+          },
+        },
+      };
+      const group = await ClassRoom.find(filterClassRoom);
+      if (group.length) {
+        return res.status(400)
+          .json({ message: CustomErrors.ALREADY_EXIST_STUDENT_IN_CLASSROOM_ERROR.MESSAGE });
+      }
+      const exist = find(students, (studentDb) => studentDb._id.toString() === student);
+      if (exist) {
+        return res.status(400)
+          .json({ message: CustomErrors.ALREADY_EXIST_STUDENT_CLASSROOM_ERROR.MESSAGE });
+      }
       const filter = {
         _id: student,
       };

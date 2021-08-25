@@ -1,6 +1,7 @@
 const { CustomErrors, Regex: { NUMBER } } = require('../../core/utils');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 const Student = require('../models');
+const ClassRoom = require('../../classRoom/models');
 
 class StudentService {
   async create(req, res) {
@@ -51,6 +52,21 @@ class StudentService {
     try {
       const { entity } = req;
       const removed = await entity.remove();
+      const filter = {
+        students: {
+          $elemMatch: {
+            $eq: entity._id,
+          },
+        },
+      };
+      const update = {
+        $pull: {
+          students: {
+            $in: entity._id,
+          },
+        },
+      };
+      await ClassRoom.updateOne(filter, update);
       return res.status(200).json(removed);
     } catch (e) {
       return res.status(500).json({ message: e.message });

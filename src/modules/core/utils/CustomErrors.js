@@ -41,6 +41,12 @@ const CustomErrors = {
   NOT_FOUND_STUDENT_CLASSROOM_ERROR: {
     MESSAGE: 'Estudiante no encontrado en el grupo',
   },
+  ALREADY_EXIST_STUDENT_CLASSROOM_ERROR: {
+    MESSAGE: 'El estudiante se encuentra registrado en el grupo',
+  },
+  ALREADY_EXIST_STUDENT_IN_CLASSROOM_ERROR: {
+    MESSAGE: 'El estudiante ya se encuentra registrado en un grupo',
+  },
 
 };
 
