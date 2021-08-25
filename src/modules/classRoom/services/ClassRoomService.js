@@ -1,5 +1,5 @@
 const { find } = require('lodash');
-const { CustomErrors, Regex: { ID } } = require('../../utils');
+const { CustomErrors, Regex: { ID } } = require('../../core/utils');
 const ClassRoom = require('../models');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 

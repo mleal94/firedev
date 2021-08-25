@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { Regex: { NAME } } = require('../../utils');
+const { Regex: { NAME } } = require('../../core/utils');
 
 const ClassRoom = new Schema({
   name: {

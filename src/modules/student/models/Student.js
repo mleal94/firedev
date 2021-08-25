@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
-const { Regex: { NAME } } = require('../../utils');
+const { Regex: { NAME } } = require('../../core/utils');
 const { GENDER_ENUM } = require('../constanst');
 
 const Student = new Schema({

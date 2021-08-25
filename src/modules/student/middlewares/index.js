@@ -1,5 +1,5 @@
 const Student = require('../models');
-const { CustomErrors } = require('../../utils');
+const { CustomErrors } = require('../../core/utils');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 
 const findStudent = async (req, res, next) => {

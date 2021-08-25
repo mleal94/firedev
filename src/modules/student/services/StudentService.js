@@ -1,4 +1,4 @@
-const { CustomErrors, Regex: { ID } } = require('../../utils');
+const { CustomErrors, Regex: { ID } } = require('../../core/utils');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 const Student = require('../models');
 

@@ -1,6 +1,6 @@
 const ClassRoom = require('../models');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
-const { CustomErrors } = require('../../utils');
+const { CustomErrors } = require('../../core/utils');
 
 const findClassRoom = async (req, res, next) => {
   try {
