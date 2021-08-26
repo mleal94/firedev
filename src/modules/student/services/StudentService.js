@@ -1,4 +1,4 @@
-const { CustomErrors, Regex: { NUMBER } } = require('../../core/utils');
+const { CustomErrors, Regex: { NUMBER, ID } } = require('../../core/utils');
 const { DEFAULT_PROJECTIONS } = require('../constanst');
 const Student = require('../models');
 const ClassRoom = require('../../classRoom/models');
@@ -12,6 +12,12 @@ class StudentService {
       }
       if (!body.email) {
         return res.status(400).json({ message: CustomErrors.MISSING_EMAIL_ERROR.MESSAGE });
+      }
+      if (!body.classRoom) {
+        return res.status(400).json({ message: CustomErrors.MISSING_CLASSROOM_ERROR.MESSAGE });
+      }
+      if (body.classRoom && !ID.test(body.classRoom)) {
+        return res.status(400).json({ message: CustomErrors.NOT_VALID_ID_ERROR.MESSAGE });
       }
       if (!body.age) {
         return res.status(400).json({ message: CustomErrors.MISSING_AGE_ERROR.MESSAGE });
@@ -27,8 +33,20 @@ class StudentService {
       if (exist) {
         return res.status(400).json({ message: CustomErrors.EXIST_EMAIL_ERROR.MESSAGE });
       }
-      const { _id } = await Student.create(body);
-      const student = await Student.findOne({ _id }, DEFAULT_PROJECTIONS).lean();
+      const newStudent = await Student.create(body);
+      if (!newStudent) {
+        return res.status(400).json({ message: CustomErrors.EXIST_EMAIL_ERROR.MESSAGE });
+      }
+      const filter = {
+        _id: body.classRoom,
+      };
+      const update = {
+        $push: {
+          students: newStudent._id,
+        },
+      };
+      await ClassRoom.updateOne(filter, update);
+      const student = await Student.findOne({ _id: newStudent._id }, DEFAULT_PROJECTIONS).lean();
       return res.status(201).json(student);
     } catch (e) {
       return res.status(500).json({ message: e.message });

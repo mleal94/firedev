@@ -35,6 +35,9 @@ const CustomErrors = {
   EXIST_EMAIL_ERROR: {
     MESSAGE: 'Existe un estudiante registrado con este correo',
   },
+  ADD_STUDENT_ERROR: {
+    MESSAGE: 'Ha ocurrido un error al registrar al estudiante',
+  },
   EXIST_CLASSROOM_NAME_ERROR: {
     MESSAGE: 'Existe grupo registrado con este nombre',
   },

@@ -45,6 +45,7 @@ const Student = new Schema({
   classRoom: {
     type: Schema.Types.ObjectId,
     ref: 'ClassRoom',
+    require: true,
   },
 });
 
