@@ -11,6 +11,10 @@ class ClassRoomService {
       if (!body.name) {
         return res.status(400).json({ message: CustomErrors.MISSING_NAME_CLASSROOM_ERROR.MESSAGE });
       }
+      if (!body.mainProfessor) {
+        // eslint-disable-next-line max-len
+        return res.status(400).json({ message: CustomErrors.MISSING_PROFESSOR_CLASSROOM_ERROR.MESSAGE });
+      }
       const exist = await ClassRoom.findOne({ name: body.name });
       if (exist) {
         return res.status(400).json({ message: CustomErrors.EXIST_CLASSROOM_NAME_ERROR.MESSAGE });

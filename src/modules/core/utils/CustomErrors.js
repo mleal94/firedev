@@ -5,6 +5,9 @@ const CustomErrors = {
   MISSING_NAME_CLASSROOM_ERROR: {
     MESSAGE: 'El nombre del grupo es obligatorio',
   },
+  MISSING_PROFESSOR_CLASSROOM_ERROR: {
+    MESSAGE: 'El nombre del grupo es obligatorio',
+  },
   MISSING_EMAIL_ERROR: {
     MESSAGE: 'El correo del estudiante es obligatorio',
   },

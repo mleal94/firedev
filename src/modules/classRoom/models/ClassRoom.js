@@ -10,6 +10,7 @@ const ClassRoom = new Schema({
   },
   mainProfessor: {
     type: String,
+    required: true,
   },
   students: [{
     type: Schema.Types.ObjectId,
